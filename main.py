@@ -160,7 +160,10 @@ def preprocess_images(chapter_name):
 # main function
 def main():
     manga_title = input('Enter title of the manga: ')
-    os.mkdir("./Data/")
+    try:
+        os.mkdir("./Data/")
+    except:
+        pass
     manga_page_content = generate_manga_page_content(manga_title)
     if manga_page_content != None:
         print("Number of lines in Manga Page Content:", len(manga_page_content))
@@ -171,8 +174,11 @@ def main():
                 image_sources = generate_image_sources(generate_html(chapter_url).split('\\n'))
                 chapter_name = chapter_url.split("/")[-1]
                 save_images_in_chapter(image_sources, chapter_name)
-                preprocess_images(chapter_name)
-                save_as_pdf(chapter_name)
+                try:
+                    preprocess_images(chapter_name)
+                    save_as_pdf(chapter_name)
+                except:
+                    pass
 
 # Driver Code
 main()
